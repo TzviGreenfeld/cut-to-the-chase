@@ -1,0 +1,8 @@
+video tools:
+  youtube downloader
+  get grid part
+  get frame every x seconds
+  cut from time stamp to time stamp
+  merge clips
+  video data(fps, quality, length, width and height)
+  
