@@ -1,5 +1,4 @@
-from cgi import test
-from videoTools import Editor
+from tools.videoTools import Editor
 import unittest
 
 
@@ -9,7 +8,7 @@ class TestEditor(unittest.TestCase):
         cls.editor = Editor(youtube_url="https://www.youtube.com/watch?v=M5DeixPDL5k")
 
     def test_download(self):
-        pass
+        return True
 
     # def test_close(self):
     #     pass
