@@ -21,6 +21,7 @@ def locate_in_frame(template, img, expected_res):
         use this soruce for threshold:
         https://stackoverflow.com/questions/36040630/how-to-interpret-matchtemplate-output-opencv-python
         """
+
         if loc is not None:
             print(expected_res)
             # bottom_right = (loc[0] + w, loc[1] + h)
