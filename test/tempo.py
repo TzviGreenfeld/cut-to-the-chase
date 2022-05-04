@@ -39,6 +39,10 @@ if __name__ == '__main__':
     vid_path = r"D:\code\chaser\test\US\The.Chase.US.S02E17.720p.WEB.h264-KOGi.mkv"
     # cap = cv2.VideoCapture(vid_path)
     for frame in frames:
+        """
+        grab only some frames
+        https://stackoverflow.com/questions/33523751/getting-specific-frames-from-videocapture-opencv-in-python
+        """
         locate_in_frame(template, frame)
     # i = 0
     # while cap.isOpened():
