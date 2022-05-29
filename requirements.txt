@@ -1,0 +1,17 @@
+certifi==2022.5.18.1
+charset-normalizer==2.0.12
+decorator==4.4.2
+idna==3.3
+imageio==2.15.0
+imageio-ffmpeg==0.4.7
+importlib-resources==5.4.0
+moviepy==1.0.3
+numpy==1.19.5
+opencv-python==4.5.5.64
+Pillow==8.4.0
+proglog==0.1.10
+pytube==12.1.0
+requests==2.27.1
+tqdm==4.64.0
+urllib3==1.26.9
+zipp==3.6.0
