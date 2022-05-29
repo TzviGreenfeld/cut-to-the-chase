@@ -5,6 +5,8 @@ from pytube import YouTube
 class Editor:
     def __init__(self, youtube_url=None, file_path=None):
         self.original_file = None
+        self.youtube_url = youtube_url
+        self.file_path = file_path
         if youtube_url is not None:
             self.download(youtube_url)
 
@@ -12,7 +14,8 @@ class Editor:
             self.original_file = open(file_path, "r")
 
         self.clips = []
-        self.VideoFileClip = mpy.VideoFileClip(self.original_file)
+        self.VideoFileClip = mpy.VideoFileClip(self.original_file.name)  # TODO: do i really need to open?
+        # print(self.VideoFileClip.filename)
         self.fps = self.VideoFileClip.fps
         self.duration = self.VideoFileClip.duration
         self.w = self.VideoFileClip.w
@@ -21,6 +24,16 @@ class Editor:
     def __del__(self):
         if self.original_file is not None:
             self.original_file.close()
+
+    def __str__(self):
+        out = ""
+        out += "from URL: " + (self.youtube_url if self.youtube_url is not None else "NO")
+        out += "\nfrom file: " + (self.file_path if self.file_path is not None else "NO")
+        out += "\nduration: " + str(self.duration)
+        out += "\nfps: " + str(self.fps)
+        out += "\nclips: " + str(len(self.clips))
+        out += "\nh, w: " + str(self.h) + "x" + str(self.w)
+        return out
 
     def download(self, youtube_url):
         """
@@ -31,20 +44,28 @@ class Editor:
         # TODO: fix this function!
         # test if valid url
         video = YouTube(youtube_url)
-        video.streams.filter(file_extension="mp4").order_by("fps").get_highest_resolution.download()
+        # for s in video.streams.filter(file_extension="mp4"):
+        #     print(s)
+        # video.streams.filter(file_extension="mp4").order_by("fps").get_highest_resolution.download()
+        stream = video.streams.filter(file_extension="mp4").get_highest_resolution()
+        # print(stream)
+        stream.download()
         self.original_file = open(video.title + ".mp4", "r")
 
-    def grid(self, i, j):
+    def grid(self, i, j, x, y):
         """
         break photo area to an ixj grid
         from (0,0) to (i-1,j-1)
+        and return the x,y section
         :return: list of tuples ( (top_left_x, top_left_y) , (bottom_right_x, bottom_right_y) )
         """
         w_interval = self.w // i
         h_interval = self.h // j
-
-        grid_ = [[((w_interval * (x - 1), h_interval * (y - 1)), (w_interval * x, h_interval * y))
-                  for x in range(1, i + 1)] for y in range(1, j + 1)]
+        # img[y:y + h, x:x + w]
+        if (x + 1) * i <= self.w and (y + 1) * j <= self.h:
+            return (y * h_interval, (y + 1) * h_interval, x * w_interval, (x + 1) * w_interval)
+        # grid_ = [[((w_interval * (x - 1), h_interval * (y - 1)), (w_interval * x, h_interval * y))
+        #           for x in range(1, i + 1)] for y in range(1, j + 1)]
 
         return grid_
 
@@ -68,18 +89,19 @@ class Editor:
         """
         final_clip = mpy.concatenate_videoclips(self.clips)
         try:
-            final_clip.write_videofile(output_file_name)
+            final_clip.write_videofile(output_file_name, codec="libx264")
         except Exception as e:
             print(e)
             return False
 
         return True
 
-    def gat_frame_every_x_seconds(self, x, path):
-        print(self.duration)
-        # for i in rnage(int(self.duration))
-        # self.VideoFileClip.save_frame("frame2.png", t = 2)
+    # def gat_frame_every_x_seconds(self, x, path):
+    #     print(self.duration)
+    #     # for i in rnage(int(self.duration))
+    #     # self.VideoFileClip.save_frame("frame2.png", t = 2)
 
 
 if __name__ == '__main__':
     print("hi")
+
