@@ -1,5 +1,4 @@
 import cv2
-import numpy
 import numpy as np
 
 
@@ -61,5 +60,3 @@ if __name__ == '__main__':
     #     if i % 60 == 0:
     #         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     #         locate_in_frame(img, frame)
-
-

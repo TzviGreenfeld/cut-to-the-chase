@@ -1,6 +1,7 @@
 import unittest
+
 from tools import FrameDetector
-from tools.videoTools import Editor
+
 
 class TestEditor(unittest.TestCase):
     @classmethod
