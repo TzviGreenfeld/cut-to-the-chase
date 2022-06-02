@@ -1,5 +1,6 @@
+import os, sys
+sys.path.append('/home/tzvigr/chaser/tools')
 from videoTools import Editor
-import os
 import unittest
 
 
@@ -57,6 +58,14 @@ class TestEditor(unittest.TestCase):
 
         self.assertTrue(os.path.exists(out_name) and abs(Editor(file_path=out_name).duration - 2.5) < 0.05 and rm(out_name))
 
-    # def test_gat_frame_every_x_seconds(self, x, path):
-    #     pass
+    def test_get_frame_every_x_seconds(self):
+        def count_png(path):
+            return len([f for f in os.listdir(path) if f.endswith(".png")])
+        before = count_png(os.getcwd)
+        tester.get_frame_every_x_seconds(fps=1, grid=tester.grid(3,3,1,2), blackAndWhite=True)
+        after = count_png(os.getcwd)
+        self.assertEqual(before + tester.duration.secs, after)
 
+
+if __name__ == '__main__':
+    unittest.main()

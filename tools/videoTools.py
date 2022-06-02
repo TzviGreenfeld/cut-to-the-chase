@@ -1,5 +1,12 @@
 import moviepy.editor as mpy
 from pytube import YouTube
+from moviepy.editor import *
+
+class Duration:
+    def __init__(self, duration):
+        self.hours = (duration / 3600)
+        self.mins = (duration % 3600) / 60
+        self.secs = (duration % 60)
 
 
 class Editor:
@@ -14,10 +21,10 @@ class Editor:
             self.original_file = open(file_path, "r")
 
         self.clips = []
-        self.VideoFileClip = mpy.VideoFileClip(self.original_file.name)  # TODO: do i really need to open?
-        # print(self.VideoFileClip.filename)
+        self.VideoFileClip = mpy.VideoFileClip(
+            self.original_file.name)  # TODO: do i really need to open?
         self.fps = self.VideoFileClip.fps
-        self.duration = self.VideoFileClip.duration
+        self.duration = Duration(self.VideoFileClip.duration)
         self.w = self.VideoFileClip.w
         self.h = self.VideoFileClip.h
 
@@ -27,8 +34,10 @@ class Editor:
 
     def __str__(self):
         out = ""
-        out += "from URL: " + (self.youtube_url if self.youtube_url is not None else "NO")
-        out += "\nfrom file: " + (self.file_path if self.file_path is not None else "NO")
+        out += "from URL: " + \
+            (self.youtube_url if self.youtube_url is not None else "NO")
+        out += "\nfrom file: " + \
+            (self.file_path if self.file_path is not None else "NO")
         out += "\nduration: " + str(self.duration)
         out += "\nfps: " + str(self.fps)
         out += "\nclips: " + str(len(self.clips))
@@ -47,7 +56,8 @@ class Editor:
         # for s in video.streams.filter(file_extension="mp4"):
         #     print(s)
         # video.streams.filter(file_extension="mp4").order_by("fps").get_highest_resolution.download()
-        stream = video.streams.filter(file_extension="mp4").get_highest_resolution()
+        stream = video.streams.filter(
+            file_extension="mp4").get_highest_resolution()
         # print(stream)
         stream.download()
         self.original_file = open(video.title + ".mp4", "r")
@@ -64,10 +74,7 @@ class Editor:
         # img[y:y + h, x:x + w]
         if (x + 1) * i <= self.w and (y + 1) * j <= self.h:
             return (y * h_interval, (y + 1) * h_interval, x * w_interval, (x + 1) * w_interval)
-        # grid_ = [[((w_interval * (x - 1), h_interval * (y - 1)), (w_interval * x, h_interval * y))
-        #           for x in range(1, i + 1)] for y in range(1, j + 1)]
-
-        return grid_
+ 
 
     def add_subclip(self, start_time, duration):
         """
@@ -96,12 +103,11 @@ class Editor:
 
         return True
 
-    # def gat_frame_every_x_seconds(self, x, path):
-    #     print(self.duration)
-    #     # for i in rnage(int(self.duration))
-    #     # self.VideoFileClip.save_frame("frame2.png", t = 2)
+    def get_frame_every_x_seconds(self, fps, grid=None, blackAndWhite=False):
+        clip = self.VideoFileClip
+        if grid:
+            clip = clip.crop(y1=grid[0], y2=grid[1], x1=grid[2], x2=grid[3])
+        if blackAndWhite:
+            clip = clip.fx(vfx.blackwhite)
 
-
-if __name__ == '__main__':
-    print("hi")
-
+        clip.write_images_sequence(nameformat='frame%01d.png', fps=fps)
