@@ -1,8 +1,4 @@
 import cv2
-import numpy as np
-from tools.videoTools import Editor
-
-import cv2
 
 
 def resize(img, scale_percent):
@@ -118,4 +114,4 @@ if __name__ == '__main__':
         if i % 60 == 0:
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             if is_in_frame(img, frame):
-                print(f"found in: {i/60} seconds")
+                print(f"found in: {i / 60} seconds")
