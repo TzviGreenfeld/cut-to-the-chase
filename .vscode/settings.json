@@ -1,6 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "/usr/bin/python3",
-        "./tools"
-    ]
-}
