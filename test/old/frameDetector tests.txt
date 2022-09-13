@@ -1,3 +1,0 @@
-get frames -test speed with effects/grid (stack?)
-time in frame
-filter
