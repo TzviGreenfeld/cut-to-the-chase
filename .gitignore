@@ -1,2 +1,3 @@
 test/samples/**/*.jpg
 test/samples/sample_episode.mp4
+.vscode
