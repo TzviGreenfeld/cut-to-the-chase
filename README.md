@@ -2,4 +2,4 @@
 cuts the boring stuff out of reality show
 
 
-still in sevelopment
+still in development
