@@ -46,7 +46,6 @@ if __name__ == '__main__':
     video_name = "test/samples/sample_episode.mp4"
     vidcap = cv2.VideoCapture(video_name)
     success, image = vidcap.read()
-
     fps = vidcap.get(cv2.CAP_PROP_FPS)
     h, w, _ = image.shape
     count = 0
@@ -54,16 +53,20 @@ if __name__ == '__main__':
     pbar = tqdm(total=74200)
     while success:
         if count % 2*fps == 0:  # every 2 seconds
+            success, image = vidcap.read()
             image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             frames.append(image[h//2:h, w//2:w])
+        else:
+            ret = vidcap.grab()
 
-        success, image = vidcap.read()
         count += 1
-        pbar.update(1)
-    vidcap.release()
+        pbar.update(1)        
     pbar.close()
- #TODO: why does program "6702 killed" here
+    #TODO: why does program "6702 killed" here
     print("detecort init from main")
     detector = FrameDetector(frames)
     detector.detect()
     print(detector.get_best_results())
+
+
+    vidcap.release()
