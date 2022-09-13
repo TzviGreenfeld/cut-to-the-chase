@@ -1,9 +1,8 @@
 import unittest
+from tools.frame_detector import FrameDetector
 
-from tools import FrameDetector
 
-
-class TestEditor(unittest.TestCase):
+class TestFrameDetector(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         global tester
