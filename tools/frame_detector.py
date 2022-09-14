@@ -33,9 +33,12 @@ class FrameDetector:
         time_stamps = []
         one_cnt, two_cnt = 0, 0
         for frame, text, confidence in self.found:
-            if (text[0] == '1' and one_cnt < 4) or (text[0] == '2' and two_cnt == 0):
+            if (text[0] == '1' and one_cnt < 4):
+                one_cnt += 1
                 time_stamps.append((frame, text))
-        time_stamps.sort(key=lambda stamp: stamp[0][3:])
+            elif (text[0] == '2' and two_cnt == 0):
+                two_cnt += 1
+                time_stamps.append((frame, text))
         return time_stamps
 
     def __str__(self) -> str:
