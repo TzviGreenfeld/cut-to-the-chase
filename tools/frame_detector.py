@@ -21,11 +21,10 @@ class FrameDetector:
             start = datetime.now()
             result = self.reader.readtext(frame)
             for (rect, text, confidence) in result:
-                if re.match('1:00|2:00|2.00', text):
+                if re.match('1.00|1:00|2:00|2.00', text):
                     self.found.append((i, text, confidence))
 
         self.detectionTime = f.format_dict["elapsed"]
-        print(f"{self.detectionTime=}")
         self.found.sort(key=lambda res: res[2], reverse=True)
         print(f"{self.found=}")
 
