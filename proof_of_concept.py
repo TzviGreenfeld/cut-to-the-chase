@@ -27,7 +27,6 @@ if __name__ == '__main__':
             ret = vidcap.grab()
         count += 1
         pbar.update(1)
-
     pbar.close()
 
     detector = FrameDetector(frames)
