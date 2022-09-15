@@ -23,12 +23,16 @@ class FrameDetector:
             for (rect, text, confidence) in result:
                 if re.match('1.00|1:00|2:00|2.00', text):
                     self.found.append((i, text, confidence))
-
+                
+        for i in self.found:
+            print(i[2])
         self.detectionTime = f.format_dict["elapsed"]
         self.found.sort(key=lambda res: res[2], reverse=True)
         print(f"{self.found=}")
 
     def get_best_results(self):
+        # TODO: add parameter to make at least a minute between 2 good frames to remove duplicates
+        # TODO: test more episodes to set cinfidence filter
         time_stamps = []
         one_cnt, two_cnt = 0, 0
         for frame, text, confidence in self.found:
