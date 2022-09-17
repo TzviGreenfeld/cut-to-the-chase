@@ -24,6 +24,16 @@ class Frame:
             min_delta = min(delta, min_delta)
         return min_delta.seconds
 
+    def __repr__(self):
+        out = ""
+        out += "time: {}\t".format(self.stamp)
+        out += "text: {}\t".format(self.text)
+        out += "confidence: {}".format(self.confidence)
+        return out
+
+
+
+        
 
 class FrameDetector:
     def __init__(self, frames):
@@ -46,18 +56,15 @@ class FrameDetector:
 
     def get_best_results(self):
         # TODO: test more episodes to set cinfidence filter
-        print("hi")
         best_frames = []
         one_cnt, two_cnt = 0, 0
         counts = [one_cnt, two_cnt]
         for frame in self.found:
             curr = 0 if frame.text[0] == '1' else 1
-            print(f"{counts[curr]=}, {one_cnt=}, {two_cnt=}")
-            if ((counts[curr] > 0 and frame.min_time_diff(best_frames) < 60) or
+            if ((counts[curr] > 0 and frame.min_time_diff(best_frames) > 60) or
                 counts[curr] == 0):
                 best_frames.append(frame)
                 counts[curr] += 1
-                print(counts)
         return best_frames
 
     def __str__(self) -> str:
