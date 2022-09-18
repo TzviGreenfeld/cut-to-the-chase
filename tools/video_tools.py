@@ -61,24 +61,11 @@ class Editor:
         # print(stream)
         stream.download()
         self.original_file = open(video.title + ".mp4", "r")
-
-    def grid(self, i, j, x, y):
-        """
-        break photo area to an ixj grid
-        from (0,0) to (i-1,j-1)
-        and return the x,y section
-        :return: list of tuples ( (top_left_x, top_left_y) , (bottom_right_x, bottom_right_y) )
-        """
-        w_interval = self.w // i
-        h_interval = self.h // j
-        # img[y:y + h, x:x + w]
-        if (x + 1) * i <= self.w and (y + 1) * j <= self.h:
-            return (y * h_interval, (y + 1) * h_interval, x * w_interval, (x + 1) * w_interval)
  
 
     def add_subclip(self, start_time, duration):
         """
-        append subClip to self. clips
+        append subClip to self.clips
         :param start_time: first timestamp of subclip in (min, sec)
         :param duration: length of clip in (min, sec)
         :return:
