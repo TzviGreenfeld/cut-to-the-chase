@@ -1,3 +1,4 @@
+from re import A
 import moviepy.editor as mpy
 import numpy as np
 from pytube import YouTube
@@ -97,7 +98,7 @@ class Editor:
         :param x: seconds
         :param crop: tuple of (y1, y2, x1, x2)
         :param blackAndWhite: if true, convert to black and white
-        :return: list of frames where frames[i][0] is the timestamp and frames[i][1] is the frame
+        :return: iterator of frames where frames[i][0] is the timestamp in seconds as numpy.float64 and frames[i][1] is the frame
 
         """
         clip = self.VideoFileClip
