@@ -1,4 +1,5 @@
 import moviepy.editor as mpy
+import numpy as np
 from pytube import YouTube
 from moviepy.editor import *
 
@@ -90,11 +91,11 @@ class Editor:
 
         return True
 
-    def get_frame_every_x_seconds(self, fps, grid=None, blackAndWhite=False):
+    def get_frame_every_x_seconds(self, x, grid=None, blackAndWhite=False):
         clip = self.VideoFileClip
         if grid:
             clip = clip.crop(y1=grid[0], y2=grid[1], x1=grid[2], x2=grid[3])
         if blackAndWhite:
             clip = clip.fx(vfx.blackwhite)
 
-        clip.write_images_sequence(nameformat='frame%01d.png', fps=fps)
+        return clip.iter_frames(fps=(1 / x), with_times=True, dtype="uint8")

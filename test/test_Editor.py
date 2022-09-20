@@ -2,7 +2,7 @@ import os
 import unittest
 from math import ceil
 
-from tools.videoTools import Editor
+from tools.video_tools import Editor
 
 
 class TestEditor(unittest.TestCase):
