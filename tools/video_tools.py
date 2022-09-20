@@ -91,11 +91,19 @@ class Editor:
 
         return True
 
-    def get_frame_every_x_seconds(self, x, grid=None, blackAndWhite=False):
+    def get_frame_every_x_seconds(self, x, crop=None, blackAndWhite=False):
+        """
+        get frame every x seconds
+        :param x: seconds
+        :param crop: tuple of (y1, y2, x1, x2)
+        :param blackAndWhite: if true, convert to black and white
+        :return: list of frames where frames[i][0] is the timestamp and frames[i][1] is the frame
+
+        """
         clip = self.VideoFileClip
-        if grid:
-            clip = clip.crop(y1=grid[0], y2=grid[1], x1=grid[2], x2=grid[3])
+        if crop:
+            clip = clip.crop(y1=crop[0], y2=crop[1], x1=crop[2], x2=crop[3])
         if blackAndWhite:
             clip = clip.fx(vfx.blackwhite)
-
+        # detector is using {time:frame} and here we are using [time, frame]
         return clip.iter_frames(fps=(1 / x), with_times=True, dtype="uint8")
