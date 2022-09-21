@@ -87,7 +87,7 @@ class Editor:
         try:
             final_clip.write_videofile(output_file_name, codec="libx264")
         except Exception as e:
-            print(e)
+            print(e) 
             return False
 
         return True
@@ -98,7 +98,7 @@ class Editor:
         :param x: seconds
         :param crop: tuple of (y1, y2, x1, x2)
         :param blackAndWhite: if true, convert to black and white
-        :return: iterator of frames where frames[i][0] is the timestamp in seconds as numpy.float64 and frames[i][1] is the frame
+        :return: iterator of frames where frames[i][0] is a timestamp in seconds as numpy.float64 and frames[i][1] is a frame
 
         """
         clip = self.VideoFileClip

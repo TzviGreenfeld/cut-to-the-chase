@@ -16,15 +16,19 @@ class Frame:
         return self.confidence > other.confidence
     
     def min_time_diff(self, others): # by time
-        min_delta = timedelta(seconds=99999)
+        # min_delta = timedelta(seconds=99999)
+        min_delta = 99999
         for frame in others:
             # t1 = datetime.strptime(self.stamp, "%M:%S")
             # t2 = datetime.strptime(frame.stamp, '%M:%S')
-            t1 = datetime.strptime(str(self.stamp), '%S')
-            t2 = datetime.strptime(str(frame.stamp), '%S')
+            # t1 = datetime.strptime(str(self.stamp), '%S')
+            # t2 = datetime.strptime(str(frame.stamp), '%S')
+            t1 = self.stamp
+            t2 = frame.stamp
             delta = max(t1, t2) - min(t1, t2)
             min_delta = min(delta, min_delta)
-        return min_delta.seconds
+        # return min_delta.seconds
+        return min_delta
 
     def __repr__(self):
         out = ""
