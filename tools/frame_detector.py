@@ -67,7 +67,7 @@ class FrameDetector:
         counts = [one_cnt, two_cnt]
         for frame in self.found:
             curr = 0 if frame.text[0] == '1' else 1
-            if ((counts[curr] > 0 and frame.min_time_diff(best_frames) > 60) or
+            if ((counts[curr] > 0 and frame.min_time_diff(best_frames) > 120) or
                 counts[curr] == 0):
                 best_frames.append(frame)
                 counts[curr] += 1

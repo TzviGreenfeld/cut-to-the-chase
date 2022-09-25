@@ -37,9 +37,9 @@ class Editor:
     def __str__(self):
         out = ""
         out += "from URL: " + \
-            (self.youtube_url if self.youtube_url is not None else "NO")
+            (self.youtube_url if self.youtube_url is not None else "-----")
         out += "\nfrom file: " + \
-            (self.file_path if self.file_path is not None else "NO")
+            (self.file_path if self.file_path is not None else "-----")
         out += "\nduration: " + str(self.duration)
         out += "\nfps: " + str(self.fps)
         out += "\nclips: " + str(len(self.clips))
@@ -68,12 +68,12 @@ class Editor:
     def add_subclip(self, start_time, duration):
         """
         append subClip to self.clips
-        :param start_time: first timestamp of subclip in (min, sec)
+        :param start_time: first timestamp of subclip in seconds
         :param duration: length of clip in (min, sec)
         :return:
         """
         # test if time in range
-        end_time = (start_time[0] + duration[0], start_time[1] + duration[1])
+        end_time = start_time + duration
         sub_clip = self.VideoFileClip.subclip(start_time, end_time)
         self.clips.append(sub_clip)
 
