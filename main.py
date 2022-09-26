@@ -3,8 +3,6 @@ from tools.frame_detector import FrameDetector, Frame
 from tools.video_tools import Editor, Duration
 
 def main(*args, **kwargs):
-    print (f"{args=}", f"{kwargs=}" )
-    
     file_name = args[0]
     editor = Editor(file_path=file_name)
     
