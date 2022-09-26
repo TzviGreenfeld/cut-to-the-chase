@@ -1,8 +1,11 @@
+import sys
 from tools.frame_detector import FrameDetector, Frame
 from tools.video_tools import Editor, Duration
 
-if __name__ == "__main__":
-    file_name = "test/samples/sample_episode.mp4"
+def main(*args, **kwargs):
+    print (f"{args=}", f"{kwargs=}" )
+    
+    file_name = args[0]
     editor = Editor(file_path=file_name)
     
     h, w = editor.h, editor.w
@@ -14,6 +17,18 @@ if __name__ == "__main__":
     best = detector.get_best_results()
 
     for frame in sorted(best, key=lambda x: x.stamp):
-        editor.add_subclip(frame.stamp, frame.stamp + 60)
-    editor.output_concatenated_sub_clips("test/samples/sample_episode_output.mp4")
+        dur = 0
+        if frame.text[0] == '1':
+            dur = 60
+        elif frame.text[0] == '2':
+            dur = 120
         
+        editor.add_subclip(int(frame.stamp), dur + 3)   
+
+    editor.output_concatenated_sub_clips(args[1])
+
+
+if __name__ == "__main__":
+# call main with all arguments
+    main(*sys.argv[1:])
+    
