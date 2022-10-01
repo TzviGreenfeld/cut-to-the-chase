@@ -1,8 +1,7 @@
 import os
 import unittest
 from math import ceil
-
-from tools.videoTools import Editor
+from tools.video_tools import Editor
 
 
 class TestEditor(unittest.TestCase):
@@ -62,7 +61,8 @@ class TestEditor(unittest.TestCase):
             return len([f for f in os.listdir(cwd) if f.endswith(".png")])
 
         before = count_png()
-        tester.get_frame_every_x_seconds(fps=1, grid=tester.grid(3, 3, 1, 2), blackAndWhite=True)
+        tester.get_frame_every_x_seconds(
+            fps=1, grid=tester.grid(3, 3, 1, 2), blackAndWhite=True)
         after = count_png()
         self.assertAlmostEqual(before + ceil(tester.duration.secs), after)
 

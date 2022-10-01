@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 from tqdm import tqdm
 
 warnings.filterwarnings("ignore", category=UserWarning)
+
+
 class Frame:
     def __init__(self, stamp, rect, text, confidence):
         self.stamp = stamp
@@ -12,22 +14,16 @@ class Frame:
         self.text = text
         self.confidence = confidence
 
-    def __gt__(self, other): # by confidence
+    def __gt__(self, other):  # by confidence
         return self.confidence > other.confidence
-    
-    def min_time_diff(self, others): # by time
-        # min_delta = timedelta(seconds=99999)
+
+    def min_time_diff(self, others):  # by time
         min_delta = 99999
         for frame in others:
-            # t1 = datetime.strptime(self.stamp, "%M:%S")
-            # t2 = datetime.strptime(frame.stamp, '%M:%S')
-            # t1 = datetime.strptime(str(self.stamp), '%S')
-            # t2 = datetime.strptime(str(frame.stamp), '%S')
             t1 = self.stamp
             t2 = frame.stamp
             delta = max(t1, t2) - min(t1, t2)
             min_delta = min(delta, min_delta)
-        # return min_delta.seconds
         return min_delta
 
     def __repr__(self):
@@ -37,9 +33,6 @@ class Frame:
         out += "confidence: {}".format(self.confidence)
         return out
 
-
-
-        
 
 class FrameDetector:
     def __init__(self, frames):
@@ -68,7 +61,7 @@ class FrameDetector:
         for frame in self.found:
             curr = 0 if frame.text[0] == '1' else 1
             if ((counts[curr] > 0 and frame.min_time_diff(best_frames) > 120) or
-                counts[curr] == 0):
+                    counts[curr] == 0):
                 best_frames.append(frame)
                 counts[curr] += 1
         return best_frames
