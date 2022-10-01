@@ -3,4 +3,4 @@ cuts the boring stuff out of the reality show "The Chase", leaving just the one 
 
 ![proof of concept](https://github.com/TzviGreenfeld/chaser/blob/main/test/chase.png)
 
-still in development
+under development
