@@ -4,6 +4,7 @@ import numpy as np
 from pytube import YouTube
 from moviepy.editor import *
 
+
 class Duration:
     def __init__(self, duration):
         self.hours = (duration / 3600)
@@ -63,7 +64,6 @@ class Editor:
         # print(stream)
         stream.download()
         self.original_file = open(video.title + ".mp4", "r")
- 
 
     def add_subclip(self, start_time, duration):
         """
@@ -87,7 +87,7 @@ class Editor:
         try:
             final_clip.write_videofile(output_file_name, codec="libx264")
         except Exception as e:
-            print(e) 
+            print(e)
             return False
 
         return True
