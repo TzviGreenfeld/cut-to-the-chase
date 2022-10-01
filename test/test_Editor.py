@@ -1,7 +1,7 @@
 import os
 import unittest
 from math import ceil
-from tools.video_tools import Editor
+from tools import Editor, FrameDetector
 
 # TODO: this is testing older version of the object with different methods, update it
 class TestEditor(unittest.TestCase):
