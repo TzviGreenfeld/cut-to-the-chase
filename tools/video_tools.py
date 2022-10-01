@@ -14,18 +14,27 @@ class Duration:
 
 class Editor:
     def __init__(self, youtube_url=None, file_path=None):
+        """
+        This is a wrapper for moviepy.editor
+        :param youtube_url: url to youtube video if you want to download it
+        :param file_path: path to video file if you want to use existing file
+        """
         self.original_file = None
         self.youtube_url = youtube_url
         self.file_path = file_path
+
+        # see if we have a file or a url
         if youtube_url is not None:
             self.download(youtube_url)
 
         if file_path is not None:
             self.original_file = open(file_path, "r")
 
-        self.clips = []
+        self.clips = [] # list of subclips we will concatenate later
         self.VideoFileClip = mpy.VideoFileClip(
             self.original_file.name)  # TODO: do i really need to open?
+        
+        # this part is just getting fields from moviepy.editor.VideoFileClip
         self.fps = self.VideoFileClip.fps
         self.duration = Duration(self.VideoFileClip.duration)
         self.w = self.VideoFileClip.w
@@ -94,7 +103,7 @@ class Editor:
 
     def get_frame_every_x_seconds(self, x, crop=None, blackAndWhite=False):
         """
-        get frame every x seconds
+        get an iterator of frames from video
         :param x: seconds
         :param crop: tuple of (y1, y2, x1, x2)
         :param blackAndWhite: if true, convert to black and white
@@ -106,5 +115,5 @@ class Editor:
             clip = clip.crop(y1=crop[0], y2=crop[1], x1=crop[2], x2=crop[3])
         if blackAndWhite:
             clip = clip.fx(vfx.blackwhite)
-        # detector is using {time:frame} and here we are using [time, frame]
+        # note that Detector is using {time: frame} and here we are using [time, frame]
         return clip.iter_frames(fps=(1 / x), with_times=True, dtype="uint8")
