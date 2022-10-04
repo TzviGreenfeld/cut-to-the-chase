@@ -1,4 +1,4 @@
-<h1 align="left"> chaser </h1>
+<h1 align="left"> cut-to-the-chase</h1>
 <p>
   cuts the boring stuff out of the reality show "The Chase", leaving just the one minute rounds and the final chase
 </p>
